@@ -13,18 +13,18 @@ def generate_token(access_key, secret_access_key):
     })
     try:
         response = requests.request("POST", url, data=payload)
-    except requests.exceptions.RequestException as e:
-        raise ValueError("Token generation failed. Please check your credentials.")
+    except requests.exceptions.RequestException:
+        raise ValueError("Token-Generierung fehlgeschlagen. Bitte überprüfen Sie Ihren Access Key und Secret Key.")
     return response.json()["token"]
 
 
-def get_projects(token):
-    url = f"{BASE_URL}/working-times/projects"
-    headers = {
-    'Authorization': f'Bearer {token}',
-    }
-    response = requests.request("GET", url, headers=headers)
-    return response.json()["projects"]
+# def get_projects(token):
+#     url = f"{BASE_URL}/working-times/projects"
+#     headers = {
+#     'Authorization': f'Bearer {token}',
+#     }
+#     response = requests.request("GET", url, headers=headers)
+#     return response.json()["projects"]
 
 def update_working_hours(token, csv_file):
     url = f"{BASE_URL}/working-times"
@@ -44,6 +44,8 @@ def update_working_hours(token, csv_file):
         "deleteOverlappingWorkingTimes": False,
         "data": data
         })
+    
+    print(payload)
 
     headers = {
     'Authorization': f'Bearer {token}',
