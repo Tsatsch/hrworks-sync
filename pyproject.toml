@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hrworks-sync"
+version = "0.1.0"
+description = ""
+authors = ["Tsatsch <sshsmnv2000@gmail.com>"]
+readme = "README.md"
+packages = [{include = "hrworks_sync"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.31.0"
+python-dotenv = "^1.0.1"
+easygui = "^0.98.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
