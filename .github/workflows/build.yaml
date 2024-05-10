@@ -37,10 +37,20 @@ jobs:
         "& $poetryFullPath --version"
 
     - name: Install dependencies
-      run: poetry install
+      if: runner.os == 'Windows'
+      run: |
+        $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
+        "& $poetryFullPath install"
+      else:
+        run: poetry install
 
     - name: Build app
-      run: poetry run PyInstaller app.spec
+      if: runner.os == 'Windows'
+      run: |
+        $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
+        "& $poetryFullPath run PyInstaller app.spec"
+      else:
+        run: poetry run PyInstaller app.spec
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
