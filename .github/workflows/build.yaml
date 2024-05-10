@@ -24,20 +24,22 @@ jobs:
       uses: snok/install-poetry@v1
 
     - name: Install dependencies
-      if: runner.os == 'Windows'
       run: |
-        $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
-        "& $poetryFullPath install"
-      else:
-        run: poetry install
+        if (${{ runner.os }} == 'Windows') {
+          $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
+          "& $poetryFullPath install"
+        } else {
+          poetry install
+        }
 
     - name: Build app
-      if: runner.os == 'Windows'
       run: |
-        $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
-        "& $poetryFullPath run PyInstaller app.spec"
-      else:
-        run: poetry run PyInstaller app.spec
+        if (${{ runner.os }} == 'Windows') {
+          $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
+          "& $poetryFullPath run PyInstaller app.spec"
+        } else {
+          poetry run PyInstaller app.spec
+        }
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
