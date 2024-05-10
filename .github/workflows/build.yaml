@@ -25,7 +25,14 @@ jobs:
 
     - name: Add Poetry to PATH on Windows
       if: runner.os == 'Windows'
-      run: echo "$env:POETRY_HOME\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      run: |
+        $poetryPath = "$env:POETRY_HOME\bin"
+        Write-Host "Adding Poetry to PATH: $poetryPath"
+        echo "$poetryPath" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+
+    - name: Check Poetry Command
+      if: runner.os == 'Windows'
+      run: Get-Command poetry
 
     - name: Install dependencies
       run: poetry install
