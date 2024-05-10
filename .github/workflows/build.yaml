@@ -23,19 +23,6 @@ jobs:
     - name: Install Poetry
       uses: snok/install-poetry@v1
 
-    - name: Add Poetry to PATH on Windows
-      if: runner.os == 'Windows'
-      run: |
-        $poetryPath = "$env:POETRY_HOME\bin"
-        echo "Adding Poetry to PATH: $poetryPath"
-        echo "$poetryPath" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-
-    - name: Directly Invoke Poetry Using Full Path
-      if: runner.os == 'Windows'
-      run: |
-        $poetryFullPath = "$env:POETRY_HOME\bin\poetry"
-        "& $poetryFullPath --version"
-
     - name: Install dependencies
       if: runner.os == 'Windows'
       run: |
