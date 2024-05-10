@@ -21,11 +21,9 @@ jobs:
         python-version: 3.12
 
     - name: Install and configure Poetry
-      uses: snok/install-poetry@v1
+      uses: dschep/install-poetry-action@v1.3
       with:
         version: 1.5.1
-        virtualenvs-create: true
-        virtualenvs-in-project: true
 
     - name: Install dependencies
       run: poetry install
