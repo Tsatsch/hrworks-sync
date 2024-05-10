@@ -18,17 +18,14 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.12'
+        python-version: 3.12
 
-    - name: Install Poetry on Unix
-      if: runner.os != 'Windows'
-      run: curl -sSL https://install.python-poetry.org | python3 -
-      shell: bash
-
-    - name: Install Poetry on Windows
-      if: runner.os == 'Windows'
-      run: (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-      shell: pwsh
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.5.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
 
     - name: Install dependencies
       run: poetry install
