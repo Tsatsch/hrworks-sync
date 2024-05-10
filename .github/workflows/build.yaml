@@ -25,9 +25,10 @@ jobs:
       uses: snok/install-poetry@v1
 
     - name: Set up Poetry Path
+      shell: bash
       run: |
         if [ "${{ runner.os }}" == "Windows" ]; then
-          echo "POETRY_PATH=$env:USERPROFILE\.poetry\bin\poetry" >> $GITHUB_ENV
+          echo "POETRY_PATH=$USERPROFILE\.poetry\bin\poetry" >> $GITHUB_ENV
         else
           echo "POETRY_PATH=$HOME/.local/bin/poetry" >> $GITHUB_ENV
         fi
