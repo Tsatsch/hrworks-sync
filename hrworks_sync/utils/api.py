@@ -18,13 +18,14 @@ def generate_token(access_key, secret_access_key):
     return response.json()["token"]
 
 
-# def get_projects(token):
-#     url = f"{BASE_URL}/working-times/projects"
-#     headers = {
-#     'Authorization': f'Bearer {token}',
-#     }
-#     response = requests.request("GET", url, headers=headers)
-#     return response.json()["projects"]
+def get_project_info(project_id, token):
+    """ Retrieves data on specific project """
+    url = f"{BASE_URL}/working-times/projects/{project_id}"
+    headers = {
+    'Authorization': f'Bearer {token}',
+    }
+    response = requests.request("GET", url, headers=headers)
+    return response.json()
 
 def update_working_hours(token, csv_file):
     url = f"{BASE_URL}/working-times"
@@ -36,7 +37,7 @@ def update_working_hours(token, csv_file):
             "beginDateAndTime": working_hour.begin_timestamp,
             "endDateAndTime": working_hour.end_timestamp,
             "type": "workingTime",
-            "projectNumber": working_hour.project_number,
+            "projectNumber": working_hour.project_id,
         })
 
 

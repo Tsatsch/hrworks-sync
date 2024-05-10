@@ -5,7 +5,7 @@ a = Analysis(
     ['hrworks_sync/app.py'],
     pathex=[],
     binaries=[],
-    datas=[('hrworks_sync/utils/', 'utils/'), ('example/Arbeitszeiten.csv', '.')],
+    datas=[('hrworks_sync/utils/', 'utils/'), ('example/Arbeitszeitenvorlage.xlsx', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

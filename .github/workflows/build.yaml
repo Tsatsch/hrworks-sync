@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 'release/*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Build app
+      run: poetry run PyInstaller app.spec
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-${{ matrix.os }}
+        path: dist/app
