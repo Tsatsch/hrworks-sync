@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'release/*'
-      - 'main'
 
 jobs:
   build:
@@ -13,25 +12,36 @@ jobs:
       matrix:
         os: [windows-latest, macos-latest]
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
     - name: Install Poetry
+      uses: snok/install-poetry@v1
+
+    - name: Set up Poetry Path
+      shell: bash
       run: |
-        curl -sSL https://install.python-poetry.org | python3 -
+        if [ "${{ runner.os }}" == "Windows" ]; then
+          echo "POETRY_PATH=$USERPROFILE\.local\bin\poetry" >> $GITHUB_ENV
+        else
+          echo "POETRY_PATH=$HOME/.local/bin/poetry" >> $GITHUB_ENV
+        fi
 
     - name: Install dependencies
-      run: poetry install
+      run: |
+        ${{ env.POETRY_PATH }} install
 
     - name: Build app
-      run: poetry run PyInstaller app.spec
+      run: |
+        ${{ env.POETRY_PATH }} run PyInstaller app.spec
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: app-${{ matrix.os }}
-        path: dist/app
+        path: dist/app*
