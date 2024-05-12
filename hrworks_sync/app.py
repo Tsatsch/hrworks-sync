@@ -18,9 +18,9 @@ def select_file():
     file_label.config(text=f"File: {file_name}, Size: {file_size} bytes")
 
 def download_template():
-    url = 'https://raw.githubusercontent.com/Tsatsch/hrworks-sync/main/example/Arbeitszeiten.csv'
+    url = 'https://raw.githubusercontent.com/Tsatsch/hrworks-sync/main/example/Arbeitszeitenvorlage.xlsx'
     response = requests.get(url)
-    destination = filedialog.asksaveasfilename(defaultextension=".csv")
+    destination = filedialog.asksaveasfilename(defaultextension=".xlsx")
     if destination:
         with open(destination, 'wb') as f:
             f.write(response.content)
